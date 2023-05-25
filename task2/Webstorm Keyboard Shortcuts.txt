@@ -1,0 +1,11 @@
+Webstorm Keyboard Shortcuts
+
+Double shift -> search everyhwere. -> Quickly find any file, action, class, symbol, tool window, or setting in WebStorm, in your project, 						  and in the current Git repository.
+
+ctrl+shift+A -> Find action. -> Find a command and execute it, open a tool window, or search for a setting.
+
+Double ctrl -> Run Anything. -> Launch run/debug configurations, run npm and yarn scripts, and reopen recent projects. 
+
+alt+enter -> Show context action. -> Quick-fixes for highlighted errors and warnings, intention actions for improving and optimizing your 						 code.
+
+shift+F2 -> Navigate between code isssues. -> Jump to the next or previous highlighted error.
