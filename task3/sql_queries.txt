@@ -1,0 +1,13 @@
+CREATE DATABASE BOOKSTORE;
+
+CREATE TABLE Books (book_id int, title varchar(100), author varchar(50), price float, publication_date date, PRIMARY KEY (book_id));
+
+INSERT INTO Books VALUES (1, "Atomic Habits", "James Clear", 200, "2018-09-16"), (2, "Deep Work", "Cal Newport", 300, "2016-01-05"), (3, "Essentialism: The Disciplined Pusuit of Less", "Greg McKeown", 500, "2014-04-15");
+
+SELECT title, author FROM Books;
+
+SELECT title, author, price FROM Books WHERE book_id = 2;
+
+UPDATE Books SET price = 19.99 WHERE book_id = 1;
+
+DELETE FROM Books WHERE book_id = 3
