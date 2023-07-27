@@ -8,6 +8,13 @@ var passwordInp = document.getElementById("password");
 
 const api_url = "http://localhost:3000/passwords/";
 
+async function getLoginApi(url) {
+	const res = await fetch(url + "login");
+	var data = await res.json();
+	// console.log(data[0].password);
+	return data;
+}
+
 async function getApi(url) {
 	const res = await fetch(url);
 	var data = await res.json();
@@ -64,13 +71,16 @@ async function putApi(id, data) {
 	}
 }
 
-function savePassword() {
+async function savePassword() {
+
+	let key = await getLoginApi(api_url);
+	key = key[0].password;
 
 	var website = websiteInp.value;
 	var username = usernameInp.value;
 	var password = passwordInp.value;
 	
-	var encryptedPassword = CryptoJS.AES.encrypt(password, "root").toString();
+	var encryptedPassword = CryptoJS.AES.encrypt(password, key).toString();
 	console.log(encryptedPassword);
 	// var decryptedPassword = CryptoJS.AES.decrypt(encryptedPassword, "root");
 	// console.log(decryptedPassword.toString(CryptoJS.enc.Utf8));
@@ -93,16 +103,19 @@ function savePassword() {
 	passwordInp.value="";
 }
 
-function displayPasswords() {
+async function displayPasswords() {
 	var passwordList = document.getElementById("passwordList");
 	passwordList.innerHTML = "";
+
+	let key = await getLoginApi(api_url);
+	key = key[0].password;
 	
 	// console.log(passwords);
 	for(var i = 0; i < passwords.length; i++){
 		var passwordItem = passwords[i];
 		console.log(passwordItem);
 
-		var decryptedPassword = CryptoJS.AES.decrypt(passwordItem.password, "root").toString(CryptoJS.enc.Utf8);
+		var decryptedPassword = CryptoJS.AES.decrypt(passwordItem.password, key).toString(CryptoJS.enc.Utf8);
 
 		console.log(decryptedPassword);
 
@@ -167,12 +180,16 @@ let generatePassword = () => {
 	passwordInp.value = generatedPassword;
 }
 
-let login = () => {
+async function login() {
+
+	let data = await getLoginApi(api_url);
+
+	console.log(data[0]);
 
 	var user_name = document.getElementById("login_username").value;
 	var pass = document.getElementById("login_password").value;
 
-	if(user_name == "root" && pass == "root") {
+	if(user_name == data[0].username && pass == data[0].password) {
 		alert("Login success full");
 		window.location.href = "password.html";
 	} else {
